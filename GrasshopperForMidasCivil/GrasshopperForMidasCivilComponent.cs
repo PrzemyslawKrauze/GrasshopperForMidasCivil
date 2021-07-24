@@ -65,7 +65,10 @@ namespace GrasshopperForMidasCivil
             List<Mesh> meshes = new List<Mesh>();
             Node.ResetID();
             Element.ResetID();
+            int a = 0;
 
+            //As all inputs are optional at least one valid geometry input is required to run solver
+            bool runSolver = false;
             if (DA.GetData(0, ref nodePrefix))
             {
                 Node.SetIDPrefix(nodePrefix);
@@ -89,6 +92,7 @@ namespace GrasshopperForMidasCivil
 
             if (!runSolver) { return; }
 
+            //Convert Rhino geometry to Node and Element classes
             List<Node> nodeList = new List<Node>();
             List<Element> elementList = new List<Element>();
 
@@ -96,9 +100,10 @@ namespace GrasshopperForMidasCivil
             Solver.ConvertCurves(curves, ref nodeList, ref elementList);
             Solver.ConvertMeshes(meshes, ref nodeList, ref elementList);
 
+            //Delete duplicated nodes
+            //Group nodes by its coordinates
             var groupedNodes = (from n in nodeList
                                 group n by new { n.X, n.Y, n.Z }).ToList();
-
             foreach (var group in groupedNodes)
             {
                 if (group.Count() > 0)
@@ -110,18 +115,17 @@ namespace GrasshopperForMidasCivil
                     }
                 }
             }
-
             nodeList = (from g in groupedNodes
                         select g.First()).ToList();
-
             nodeList = (from n in nodeList
                         orderby n.ID
                         select n).ToList();
 
+            //Write Node and Elements classes to MidasCivil Command shell
             string nodeText = Node.ListToString(nodeList);
             string elementText = Element.ListToString(elementList);
-
             string output = nodeText + "\n" + elementText;
+
             DA.SetData(0, output);
 
         }
