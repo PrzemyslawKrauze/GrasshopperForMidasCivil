@@ -56,7 +56,8 @@ namespace GrasshopperForMidasCivil
         /// <param name="DA">The DA object can be used to retrieve data from input parameters and 
         /// to store data in output parameters.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
-        {            
+        {
+            bool runSolver = false;
             int nodePrefix = 0;
             int elementPrefix = 0;
             List<Point3d> points = new List<Point3d>();
@@ -88,6 +89,7 @@ namespace GrasshopperForMidasCivil
             {
                 runSolver = true;
             }
+
             if (!runSolver) { return; }
 
             //Convert Rhino geometry to Node and Element classes
@@ -102,7 +104,6 @@ namespace GrasshopperForMidasCivil
             //Group nodes by its coordinates
             var groupedNodes = (from n in nodeList
                                 group n by new { n.X, n.Y, n.Z }).ToList();
-            //Overwrite grouped nodes ID's
             foreach (var group in groupedNodes)
             {
                 if (group.Count() > 0)
@@ -114,10 +115,8 @@ namespace GrasshopperForMidasCivil
                     }
                 }
             }
-            //Take only one node from duplicated node groups
             nodeList = (from g in groupedNodes
                         select g.First()).ToList();
-            //Sort nodes by ID
             nodeList = (from n in nodeList
                         orderby n.ID
                         select n).ToList();
@@ -127,8 +126,8 @@ namespace GrasshopperForMidasCivil
             string elementText = Element.ListToString(elementList);
             string output = nodeText + "\n" + elementText;
 
-            //Return output
             DA.SetData(0, output);
+
         }
 
         /// <summary>
