@@ -18,3 +18,7 @@ Converts Rhino geometries into Midas elements, such as:
 - Meshes to Plates
 
 Allows to add prefix to Node and Elements for better managing elements IDs.
+
+## How to instal
+Copy content of GHComponent folder into your Grasshopper libraries. You can find more informations [here](https://parametricbydesign.com/grasshopper/tutorials/installing-grasshopper-and-plugins/)
+
