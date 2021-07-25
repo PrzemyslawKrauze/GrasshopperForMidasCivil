@@ -1,5 +1,5 @@
 # GrasshopperForMidasCivil
-Grasshopper component for converting Rhino geometry to Midas Civil Command shell
+Grasshopper component for converting Rhino geometry to Midas Civil commands
 
 ## What problem it solves?
 Lack of link between Rhino and Midas Civil
