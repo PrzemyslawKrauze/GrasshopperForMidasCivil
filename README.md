@@ -1,11 +1,10 @@
-# GrasshopperForMidasCivil
+## GrasshopperForMidasCivil
 Grasshopper component for converting Rhino geometry to Midas Civil Command shell
 
-What problem it solves?
+#What problem it solves?
 Lack of link between Rhino and Midas Civil
 
-How does it solve the problem?
-
+#How does it solve the problem?
 By creating Grasshopper component allowing to convert simple Rhino geometry into Midas Civil commands. Which can be loaded to Midas Civil.
 
 Why this solution?
