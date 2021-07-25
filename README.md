@@ -1,7 +1,7 @@
 # GrasshopperForMidasCivil
 Grasshopper component for converting Rhino geometry to Midas Civil commands.
 
-## What problem it solves?
+## What problem does it solve?
 Lack of link between Rhino and Midas Civil.
 
 ## How does it solve the problem?
@@ -19,6 +19,6 @@ Converts Rhino geometries into Midas elements, such as:
 
 Allows to add prefix to Node and Elements for better managing elements IDs.
 
-## How to install
+## How to install?
 Copy content of GHComponent folder into your Grasshopper libraries. You can find more information [here](https://parametricbydesign.com/grasshopper/tutorials/installing-grasshopper-and-plugins/).
 
