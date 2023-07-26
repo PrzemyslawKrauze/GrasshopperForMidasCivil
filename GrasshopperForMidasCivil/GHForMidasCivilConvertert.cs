@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace GrasshopperForMidasCivil
 {
-    public class GrasshopperForMidasCivilComponent : GH_Component
+    public class GrasshopperForMidasCivilConvertert : GH_Component
     {
         /// <summary>
         /// Each implementation of GH_Component must provide a public 
@@ -20,7 +20,7 @@ namespace GrasshopperForMidasCivil
         /// Subcategory the panel. If you use non-existing tab or panel names, 
         /// new tabs/panels will automatically be created.
         /// </summary>
-        public GrasshopperForMidasCivilComponent() : base("MidasCivilConverter", "MCC", "Description", "Category", "Subcategory")
+        public GrasshopperForMidasCivilConvertert() : base("MidasCivilConverter", "MCC", "Description", "MidasCivil", "MidasCivil")
         {
         }
 
@@ -34,12 +34,16 @@ namespace GrasshopperForMidasCivil
             pManager.AddPointParameter("Points", "P", "Points to be converted to nodes", GH_ParamAccess.list);
             pManager.AddCurveParameter("Curves", "C", "Lines elements to be converted to beams", GH_ParamAccess.list);
             pManager.AddMeshParameter("Mesh", "M", "Mesh to be converted to plate elements", GH_ParamAccess.list);
+            pManager.AddIntegerParameter("iMat", "iMat", "Material's ID", GH_ParamAccess.item);
+            pManager.AddIntegerParameter("iPro", "iPro", "Section's ID", GH_ParamAccess.item);
 
             pManager[0].Optional = true;
             pManager[1].Optional = true;
             pManager[2].Optional = true;
             pManager[3].Optional = true;
             pManager[4].Optional = true;
+            pManager[5].Optional = true;
+            pManager[6].Optional = true;
         }
 
         /// <summary>
@@ -48,6 +52,8 @@ namespace GrasshopperForMidasCivil
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
             pManager.AddTextParameter("MCT Command List", "MCT", "Midas input file", GH_ParamAccess.item);
+            pManager.AddGenericParameter("Nodes Created", "NC", "ID's of created nodes", GH_ParamAccess.list);
+            pManager.AddGenericParameter("Elements created", "EC", "ID's of created elements", GH_ParamAccess.list);
         }
 
         /// <summary>
@@ -63,12 +69,13 @@ namespace GrasshopperForMidasCivil
             List<Point3d> points = new List<Point3d>();
             List<Curve> curves = new List<Curve>();
             List<Mesh> meshes = new List<Mesh>();
+            int iMat = 1;
+            int iPro = 1;
             Node.ResetID();
             Element.ResetID();
-            int a = 0;
 
             //As all inputs are optional at least one valid geometry input is required to run solver
-            bool runSolver = false;
+          
             if (DA.GetData(0, ref nodePrefix))
             {
                 Node.SetIDPrefix(nodePrefix);
@@ -89,6 +96,14 @@ namespace GrasshopperForMidasCivil
             {
                 runSolver = true;
             }
+            if(DA.GetData(5, ref iMat))
+            {
+                runSolver = true;
+            }
+            if (DA.GetData(6, ref iPro))
+            {
+                runSolver = true;
+            }
 
             if (!runSolver) { return; }
 
@@ -97,8 +112,8 @@ namespace GrasshopperForMidasCivil
             List<Element> elementList = new List<Element>();
 
             Solver.ConvertPoints(points, ref nodeList);
-            Solver.ConvertCurves(curves, ref nodeList, ref elementList);
-            Solver.ConvertMeshes(meshes, ref nodeList, ref elementList);
+            Solver.ConvertCurves(curves,iMat,iPro, ref nodeList, ref elementList);
+            Solver.ConvertMeshes(meshes,iMat,iPro, ref nodeList, ref elementList);
 
             //Delete duplicated nodes
             //Group nodes by its coordinates
@@ -125,9 +140,10 @@ namespace GrasshopperForMidasCivil
             string nodeText = Node.ListToString(nodeList);
             string elementText = Element.ListToString(elementList);
             string output = nodeText + "\n" + elementText;
-
+                       
             DA.SetData(0, output);
-
+            DA.SetDataList(1, nodeList);
+            DA.SetDataList(2, elementList);
         }
 
         /// <summary>

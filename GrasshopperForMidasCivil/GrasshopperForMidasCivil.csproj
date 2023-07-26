@@ -57,12 +57,33 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Element.cs" />
-    <Compile Include="GrasshopperForMidasCivilComponent.cs" />
-    <Compile Include="GrasshopperForMidasCivilInfo.cs" />
-    <Compile Include="Node.cs" />
+    <Compile Include="ElasticLink.cs" />
+    <Compile Include="GHForMidasCivilConstraint.cs" />
+    <Compile Include="GHForMidasCivilElasticLink.cs" />
+    <Compile Include="MidasCivilClasses\Constraint.cs" />
+    <Compile Include="GHForMidasCivilDeconstructElement.cs" />
+    <Compile Include="GHForMidasCivilDeconstructNode.cs" />
+    <Compile Include="GHForMidasCivilFindClosestNode.cs" />
+    <Compile Include="GHForMidasCivilPlaneLoad.cs" />
+    <Compile Include="GHForMidasCivilTemperatureGradient.cs" />
+    <Compile Include="MidasCivilClasses\Element.cs" />
+    <Compile Include="GHForMidasCivilConvertert.cs" />
+    <Compile Include="GHForMidasCivilInfo.cs" />
+    <Compile Include="GHForMidasCivilPNLoadType.cs" />
+    <Compile Include="MidasCivilClasses\Group.cs" />
+    <Compile Include="MidasCivilClasses\MVLDCase.cs" />
+    <Compile Include="MidasCivilClasses\Node.cs" />
+    <Compile Include="MidasCivilClasses\PlaneLoad.cs" />
+    <Compile Include="MidasCivilClasses\PNLoadType.cs" />
+    <Compile Include="GHForMidasCivilTemperature.cs" />
+    <Compile Include="GHForMidasCivilSurflane.cs" />
+    <Compile Include="GHForMidasCivilMVLDCase.cs" />
+    <Compile Include="GHForMidasCivilGroup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Solver.cs" />
+    <Compile Include="GHForMidasCivilThickness.cs" />
+    <Compile Include="MidasCivilClasses\Thickness.cs" />
+    <Compile Include="MidasCivilClasses\Surflane.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

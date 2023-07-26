@@ -4,20 +4,28 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace GrasshopperForMidasCivil
 {
     public class Element
     {      
-        public static string ListToString(List<Element> elementList)
+        public  static string ListToString(List<Element> elementList)
         {
-            string line = "*ELEMENT\n";
-            foreach (Element el in elementList)
+            if (elementList.Count != 0)
             {
-                line += el.ToString();
-                line += "\n";
+                string line = "*ELEMENT\n";
+                foreach (Element el in elementList)
+                {
+                    line += el.ToString();
+                    line += "\n";
+                }
+                return line;
             }
-            return line;
+            else
+            {
+                return String.Empty;
+            }
         }
         public static void ResetID()
         {
@@ -36,6 +44,7 @@ namespace GrasshopperForMidasCivil
         public SubType Type { get { return subType; } }
         public Node iN1;//1st node ID
         public Node iN2; //2nd node ID
+        public List<Node> Nodes = new List<Node>();
         public enum SubType
         {
             PLATE,
@@ -59,7 +68,8 @@ namespace GrasshopperForMidasCivil
             this.iPRO = sectionID;
             this.iN1 = iN1;
             this.iN2 = iN2;
-
+            Nodes.Add(iN1);
+            Nodes.Add(iN2);
             iSUB = 0;
         }
 
@@ -83,7 +93,10 @@ namespace GrasshopperForMidasCivil
             this.iN2 = iN2;
             this.iN3 = iN3;
             this.iN4 = iN4;
-
+            Nodes.Add(iN1);
+            Nodes.Add(iN2);
+            Nodes.Add(iN3);
+            Nodes.Add(iN4);
             this.iSUB = 1;
         }
         public Plate(int materialID, int thicknessID, Node iN1, Node iN2, Node iN3)
@@ -95,7 +108,9 @@ namespace GrasshopperForMidasCivil
             this.iN1 = iN1;
             this.iN2 = iN2;
             this.iN3 = iN3;
-
+            Nodes.Add(iN1);
+            Nodes.Add(iN2);
+            Nodes.Add(iN3);
             this.iSUB = 1;
         }
 

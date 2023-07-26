@@ -11,6 +11,7 @@ namespace GrasshopperForMidasCivil
     public class Node
     {
         //Constructor
+        public Node() { }
         public Node(Point3d point)
         {
             this.ID = Interlocked.Increment(ref nextID);
@@ -48,9 +49,9 @@ namespace GrasshopperForMidasCivil
         #region PublicProperties
         public int ID { get;  set; }
         public Point3d XYZ { get { return xyz; } }
-        public double X { get { return xyz.X; } }
-        public double Y { get { return xyz.Y; } }
-        public double Z { get { return xyz.Z; } }
+        public double X { get { return Math.Round( xyz.X,3); } }
+        public double Y { get { return Math.Round(xyz.Y, 3); } }
+        public double Z { get { return Math.Round(xyz.Z, 3); } }
         #endregion
         #region PrivateFields
         static int nextID;

@@ -4,7 +4,7 @@ using System.Drawing;
 
 namespace GrasshopperForMidasCivil
 {
-    public class GrasshopperForMidasCivilInfo : GH_AssemblyInfo
+    public class GHForMidasCivilInfo : GH_AssemblyInfo
     {
         public override string Name
         {
